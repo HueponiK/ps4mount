@@ -52,3 +52,7 @@ $CC $FLAGS -o "$B/log_test" test/log_test.c src/logts.c -lpthread
 echo "== add-on copies"
 $CC $FLAGS -o "$B/accopy_test" test/accopy_test.c src/accopy.c
 "$B/accopy_test"
+
+echo "== disc probe (read-only)"
+$CC $FLAGS -o "$B/disc_probe_test" test/disc_probe_test.c src/disc_probe.c
+"$B/disc_probe_test"

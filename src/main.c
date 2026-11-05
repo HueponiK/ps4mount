@@ -46,6 +46,7 @@
 #include "logts.h"
 #include "origin.h"
 #include "pkg.h"
+#include "disc_probe.h"
 #include "web.h"
 #include "icon_data.h"
 
@@ -4270,6 +4271,11 @@ int main(void) {
     if (!log_start(STATE_DIR "/log.txt"))
         atexit(log_stop); /* the last lines reach the file before the payload exits */
     setvbuf(stdout, NULL, _IOLBF, 0);
+    /* Opt-in read-only diagnostic; does not register or mount optical titles. */
+    if (access(STATE_DIR "/disc_probe.enable", F_OK) == 0) {
+        disc_probe_result_t disc_result;
+        disc_probe_scan("/mnt/disc", stdout, &disc_result);
+    }
     config_load();
     signal(SIGPIPE, SIG_IGN);
     check_firmware();
